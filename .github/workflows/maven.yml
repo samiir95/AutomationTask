@@ -17,8 +17,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
-      - name: Codecov
-        uses: codecov/codecov-action@v3.1.1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+          files: ./target/jacoco/jacoco.xml
+          verbose: true
       - name: Checkout Code
         uses: actions/checkout@v2.3.4
       - name: Setup Node.js environment
