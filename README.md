@@ -25,7 +25,7 @@ To run this project, you will need to have [Maven](https://maven.apache.org/) in
 
 3. Run the following command to build the project and run the tests:
 
-    mvn clean test
+    mvn test -DexecutionAddress="local"
 
 
 This will compile the project, download any necessary dependencies, and run the Cucumber tests. You should see the results of the tests in the console output.
