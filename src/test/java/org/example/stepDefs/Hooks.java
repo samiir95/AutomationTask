@@ -15,7 +15,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class Hooks {
 
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    public static ThreadLocal<RemoteWebDriver> remoteDriver = new ThreadLocal<>();
 
 
     @Before(value = "@smoke")
@@ -36,8 +35,7 @@ public class Hooks {
             System.out.println("remote url is: " + remoteURL);
             // Initialize the RemoteWebdriver instance
             try {
-                remoteDriver.set(new RemoteWebDriver(new URL(remoteURL), capabilities));
-                driver = remoteDriver;
+                driver.set(new RemoteWebDriver(new URL(remoteURL), capabilities));
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
