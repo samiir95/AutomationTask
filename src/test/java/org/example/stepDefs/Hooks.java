@@ -15,6 +15,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class Hooks {
 
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    public static ThreadLocal<RemoteWebDriver> remoteDriver = new ThreadLocal<>();
+
 
     @Before(value = "@smoke")
     public void openBrowser() {
