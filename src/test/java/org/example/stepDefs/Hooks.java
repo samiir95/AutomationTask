@@ -14,7 +14,29 @@ public class Hooks {
 
     @Before(value = "@smoke")
     public void openBrowser() {
+    
+    if (System.getProperty("executionAddress").equals("local")) {
         driver.set(new ChromeDriver());
+        }
+        
+        else {
+         // Define remote web-driver capabilities
+            EdgeOptions capabilities = new EdgeOptions();
+            capabilities.setPlatformName("LINUX");
+            capabilities.setBrowserVersion("111.0");
+
+            // Define the remote webdriver URL
+            String remoteURL = "http://" + System.getProperty("host") + ":" + System.getProperty("port") + "/wd/hub";
+            System.out.println("remote url is: " + remoteURL);
+            // Initialize the RemoteWebdriver instance
+            try {
+                remoteDriver = new RemoteWebDriver(new URL(remoteURL), capabilities);
+                driver = remoteDriver;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        
         driver.get().manage().window().maximize();
         driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(FileReaderManager.getInstance().getConfigReader().getImplicitlyWait()));
         driver.get().get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
