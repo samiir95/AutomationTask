@@ -37,7 +37,7 @@ public class Hooks {
             // Initialize the RemoteWebdriver instance
             try {
                 remoteDriver.set(new RemoteWebDriver(new URL(remoteURL), capabilities));
-                driver.get() = remoteDriver.get();
+                driver = remoteDriver;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
