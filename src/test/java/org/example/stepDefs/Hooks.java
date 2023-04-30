@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
 
@@ -27,7 +28,7 @@ public class Hooks {
             driver.set(webDriver);
         } else {
             // Define remote web-driver capabilities
-            ChromeOptions capabilities = new ChromeOptions();
+            EdgeOptions capabilities = new EdgeOptions();
             capabilities.setPlatformName("LINUX");
             capabilities.setBrowserVersion("111.0");
 
