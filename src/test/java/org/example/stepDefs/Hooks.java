@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 
 public class Hooks {
@@ -21,6 +22,7 @@ public class Hooks {
     public void openBrowser() {
     
     if (System.getProperty("executionAddress").equals("local")) {
+        WebDriverManager.chromedriver().setup();
         driver.set(new ChromeDriver());
         }
         
