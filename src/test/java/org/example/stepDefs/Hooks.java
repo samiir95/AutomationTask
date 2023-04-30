@@ -22,7 +22,7 @@ public class Hooks {
     public void openBrowser() {
 
         if (System.getProperty("executionAddress", "local").equals("local")) {
-            WebDriverManager.chromedriver().version("LATEST").setup();
+            WebDriverManager.chromedriver().version("112").setup();
             WebDriver webDriver = new ChromeDriver();
             driver.set(webDriver);
         } else {
