@@ -2,33 +2,32 @@ package org.example.stepDefs;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import managers.FileReaderManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
 
 
 public class Hooks {
 
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-
     @Before(value = "@smoke")
     public void openBrowser() {
-    
-    if (System.getProperty("executionAddress").equals("local")) {
-        WebDriverManager.chromedriver().setup();
-        driver.set(new ChromeDriver());
-        }
-        
-        else {
-         // Define remote web-driver capabilities
-            EdgeOptions capabilities = new EdgeOptions();
+
+        if (System.getProperty("executionAddress", "local").equals("local")) {
+            WebDriverManager.getInstance(CHROME).setup();
+            WebDriver webDriver = new ChromeDriver();
+            driver.set(webDriver);
+        } else {
+            // Define remote web-driver capabilities
+            ChromeOptions capabilities = new ChromeOptions();
             capabilities.setPlatformName("LINUX");
             capabilities.setBrowserVersion("111.0");
 
@@ -42,7 +41,7 @@ public class Hooks {
                 e.printStackTrace();
             }
         }
-        
+
         driver.get().manage().window().maximize();
         driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(FileReaderManager.getInstance().getConfigReader().getImplicitlyWait()));
         driver.get().get(FileReaderManager.getInstance().getConfigReader().getApplicationUrl());
@@ -50,6 +49,9 @@ public class Hooks {
 
     @After
     public void quitDriver() {
-        driver.get().quit();
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
+        }
     }
 }
